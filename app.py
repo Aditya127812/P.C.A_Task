@@ -2,15 +2,9 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-st.title("US Accident Severity Prediction")
+model = joblib.load("best_model.pkl")
 
-try:
-    model = joblib.load("best_model.pkl")
-    st.success("Model loaded successfully!")
-except Exception as e:
-    st.error("Error loading model:")
-    st.exception(e)
-    st.stop()
+st.title("US Accident Severity Prediction")
 
 names = [
     "Start_Lat", "Start_Lng", "Distance(mi)", "Temperature(F)",
@@ -22,10 +16,5 @@ values = [st.number_input(name) for name in names]
 
 if st.button("Predict"):
     data = pd.DataFrame([values], columns=names)
-
-    try:
-        prediction = model.predict(data)[0]
-        st.success(f"Predicted Severity: {prediction}")
-    except Exception as e:
-        st.error("Error while making prediction:")
-        st.exception(e)
+    prediction = model.predict(data)[0]
+    st.success(f"Predicted Severity: {prediction}")
