@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
-import joblib
+import xgboost as xgb
 
-model = joblib.load("best_model.pkl")
+model = xgb.XGBClassifier()
+model.load_model("best_model.json")
 
 st.title("US Accident Severity Prediction")
 
